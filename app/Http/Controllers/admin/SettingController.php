@@ -34,7 +34,6 @@ class SettingController extends Controller
 
         $setting->update($data);
 
-        return redirect()->route('admin.settings.index')
-                         ->with('message', 'Setting updated successfully!');
+        return redirect()->route('admin.settings.index')->with('message', 'Setting updated successfully!');
     }
 }

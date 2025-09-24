@@ -33,6 +33,11 @@ Route::middleware('guest:admin')->prefix('admin')->name('admin.')->group(functio
     Route::get('password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 });
+
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+    Route::resource('blogs', App\Http\Controllers\Admin\BlogController::class);
+});
+
 // ->middleware('auth:admin')
 // Authenticated admin routes
 Route::prefix('admin')->middleware('auth:admin')->name('admin.')->group(function () {

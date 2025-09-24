@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Blog extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'blog_category_id',
         'name',
@@ -15,17 +18,20 @@ class Blog extends Model
         'content',
         'tags',
         'keywords',
-        'meta_description'
-    ];
-    protected $casts = [
-        'keywords' => 'array',
-        'tags' => 'array',
+        'meta_description',
     ];
 
-    public function category()
-    {
-        return $this->belongsTo(BlogCategory::class);
-    }
+
+    protected $casts = [
+        'tags'     => 'array',
+        'keywords' => 'array',
+    ];
+
+ public function category()
+{
+    return $this->belongsTo(BlogCategory::class,'blog_category_id');
+}
+
 
 
       public function blogCategory()
