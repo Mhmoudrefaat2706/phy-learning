@@ -19,7 +19,7 @@ class Project extends Model
         'price',
         'lang',
         'image',
-        'views_count',
+        'views_count'
     ];
 
     public function category()

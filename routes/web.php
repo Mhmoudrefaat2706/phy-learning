@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -18,6 +17,11 @@ use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\QuestionsController;
+use App\Http\Controllers\Admin\AnswerController;
+
+Route::prefix('api')->group(base_path('routes/api.php'));
+
 
 Route::get('login', [LoginController::class, 'create'])->name('login');
 // Guest routes (admin)
@@ -34,11 +38,10 @@ Route::middleware('guest:admin')->prefix('admin')->name('admin.')->group(functio
     Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 });
 
-Route::prefix('admin')->middleware(['auth'])->group(function () {
-    Route::resource('blogs', App\Http\Controllers\Admin\BlogController::class);
-});
+// Route::prefix('admin')->middleware(['auth'])->group(function () {
+//     Route::resource('blogs', App\Http\Controllers\Admin\BlogController::class);
+// });
 
-// ->middleware('auth:admin')
 // Authenticated admin routes
 Route::prefix('admin')->middleware('auth:admin')->name('admin.')->group(function () {
 
@@ -46,6 +49,7 @@ Route::prefix('admin')->middleware('auth:admin')->name('admin.')->group(function
     Route::post('logout', [LoginController::class, 'destroy'])->name('logout');
 
     // Admins CRUD
+        Route::get('dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('admins', [AdminController::class, 'index'])->name('admins.index');
     Route::post('admins', [AdminController::class, 'store'])->name('admins.store');
     Route::put('admins/{admin}', [AdminController::class, 'update'])->name('admins.update');
@@ -63,6 +67,7 @@ Route::prefix('admin')->middleware('auth:admin')->name('admin.')->group(function
     Route::put('roles/{role}', [RoleController::class, 'update'])->name('roles.update');
     Route::delete('roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
+    //permissions
     Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
     Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
     Route::post('/permissions', [PermissionController::class, 'store'])->name('permissions.store');
@@ -77,6 +82,21 @@ Route::prefix('admin')->middleware('auth:admin')->name('admin.')->group(function
     Route::put('social-media/{social_media}', [SocialMediaController::class, 'update'])->name('social_media.update');
     Route::delete('social-media/{social_media}', [SocialMediaController::class, 'destroy'])->name('social_media.destroy');
 
+    //questions
+    // Route::get('questions', [QuestionsController::class, 'index'])->name('questions.index');
+    // Route::post('questions', [QuestionsController::class, 'store'])->name('questions.store');
+    // Route::put('questions/{question}', [QuestionsController::class, 'update'])->name('questions.update');
+    // Route::delete('questions/{question}', [QuestionsController::class, 'destroy'])->name('questions.destroy');
+
+    //answer
+    Route::get('answers', [AnswerController::class, 'index'])->name('answers.index');
+    Route::post('questions', [AnswerController::class, 'store'])->name('questions.store');
+    Route::put('questions/{question}', [AnswerController::class, 'update'])->name('questions.update');
+    Route::delete('questions/{question}', [AnswerController::class, 'destroy'])->name('questions.destroy');
+    Route::get('levels/{level}/questions',[AnswerController::class, 'questionsByLevel'])->name('levels.questions');
+    Route::get('/questions/search', [AnswerController::class, 'search'])->name('questions.search');
+    Route::get('/questions/{question}/edit', [AnswerController::class, 'edit'])->name('questions.edit');
+
     // Settings CRUD
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
     Route::put('settings/{setting}', [SettingController::class, 'update'])->name('settings.update');
@@ -89,29 +109,19 @@ Route::prefix('admin')->middleware('auth:admin')->name('admin.')->group(function
     Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     // Blogs CRUD
-      Route::get('blogs', [BlogController::class, 'index'])
-
-        ->name('blogs.index');
-    Route::post('blogs', [BlogController::class, 'store'])
-        ->name('blogs.store');
-    Route::put('blogs/{blog}', [BlogController::class, 'update'])
-        ->name('blogs.update');
-    Route::delete('blogs/{blog}', [BlogController::class, 'destroy'])
-        ->name('blogs.destroy');
-    Route::get('blogs/{blog}/edit', [BlogController::class, 'edit'])
-        ->name('blogs.edit');
+    Route::get('blogs', [BlogController::class, 'index'])->name('blogs.index');
+    Route::post('blogs', [BlogController::class, 'store'])->name('blogs.store');
+    Route::put('blogs/{blog}', [BlogController::class, 'update'])->name('blogs.update');
+    Route::delete('blogs/{blog}', [BlogController::class, 'destroy'])->name('blogs.destroy');
+    Route::get('blogs/{blog}/edit', [BlogController::class, 'edit'])->name('blogs.edit');
 
     Route::get('/projects', [ProjectController::class, 'index'])
         // ->middleware([CheckPermission::class . ':view_courses'])
         ->name('projects.index');
-    Route::post('/projects', [ProjectController::class, 'store'])
-        ->name('projects.store');
-    Route::get('/projects/{project}', [ProjectController::class, 'show'])
-        ->name('projects.show');
-    Route::put('/projects/{project}', [ProjectController::class, 'update'])
-        ->name('projects.update');
-    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])
-        ->name('projects.destroy');
+    Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
+    Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
+    Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
 
     // Messages CRUD
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
@@ -139,6 +149,6 @@ Route::prefix('admin')->middleware('auth:admin')->name('admin.')->group(function
 
    });
 
-Route::fallback(function () {
-    return redirect()->route('admin.admins.index');
-});
+// Route::fallback(function () {
+//     return redirect()->route('admin.admins.index');
+// });

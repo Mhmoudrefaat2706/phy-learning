@@ -5,6 +5,12 @@
                 <li class="menu-title">Menu</li>
 
                 <li>
+                    <a href="{{ route('admin.dashboard') }}" class="waves-effect">
+                        <i class="ri-home-4-line"></i>
+                        <span>{{ ("home") }}</span>
+                    </a>
+                </li>
+                <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-shield-user-line"></i>
                         <span>Admins</span>
@@ -26,7 +32,28 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-share-box-line"></i>
+                        <i class="ri-question-line"></i>
+                        <span>Questions</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('admin.answers.index')}}">List</a></li>
+                    </ul>
+                </li>
+
+                {{-- <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-reply-line"></i>
+                        <span>Answer</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('admin.answers.index')}}">List</a></li>
+                    </ul>
+                </li> --}}
+
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-facebook-line"></i>
                         <span>Social Media</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
@@ -54,16 +81,17 @@
                     </ul>
                 </li>
 
-                <li>
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-folder-line"></i>
+                        <i class="ri-folder-4-line"></i>
                         <span>Projects</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('admin.projects.index')}}">List</a></li>
                     </ul>
-                </li>
-                <li>
+                </li> --}}
+
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-folder-line"></i>
                         <span>Categories</span>
@@ -71,9 +99,9 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('admin.categories.index')}}">List</a></li>
                     </ul>
-                </li>
+                </li> --}}
 
-                <li>
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="ri-newspaper-line"></i>
                         <span>Blogs</span>
@@ -81,17 +109,17 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('admin.blogs.index')}}">List</a></li>
                     </ul>
-                </li>
+                </li> --}}
 
-                <li>
+                {{-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-mail-line"></i>
-                        <span>Messages</span>
+                        <i class="ri-book-2-line"></i>
+                        <span>Blog Categories</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('admin.messages.index')}}">List</a></li>
+                        <li><a href="{{route('admin.blog_categories.index')}}">List</a></li>
                     </ul>
-                </li>
+                </li> --}}
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -105,31 +133,21 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-question-line"></i>
+                        <i class="ri-mail-line"></i>
+                        <span>Messages</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{route('admin.messages.index')}}">List</a></li>
+                    </ul>
+                </li>
+
+                {{-- <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="ri-question-answer-line"></i>
                         <span>FAQs</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{route('admin.faqs.index')}}">List</a></li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-book-2-line"></i>
-                        <span>Blog Categories</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('admin.blog_categories.index')}}">List</a></li>
-                    </ul>
-                </li>
-{{-- 
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="ri-mail-send-line"></i>
-                        <span>Newsletters</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{route('admin.newsletters.index')}}">List</a></li>
                     </ul>
                 </li> --}}
 

@@ -23,6 +23,8 @@ class UpdateUserRequest extends FormRequest
                 Rule::unique('users', 'email')->ignore($this->user->id),
             ],
             'phone'    => 'nullable|string|max:20',
+            'school'    => 'nullable|string|max:256',
+            'school_level'    => 'nullable|string|max:256',
             'password' => 'nullable|string|min:8',
         ];
     }

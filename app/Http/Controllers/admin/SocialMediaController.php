@@ -11,7 +11,7 @@ class SocialMediaController extends Controller
 {
     public function index()
     {
-        $socials = SocialMedia::orderBy('created_at', 'desc')->paginate(6);
+        $socials = SocialMedia::orderBy('created_at', 'desc')->paginate(8);
         return view('admin.pages.socialmedia.list', compact('socials'));
     }
 

@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\level;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
@@ -16,16 +17,24 @@ class UserController extends Controller
         return view('admin.pages.users.list', compact('users'));
     }
 
+
     public function store(StoreUserRequest $request): JsonResponse
     {
         $validated = $request->validated();
         $validated['password'] = Hash::make($validated['password']);
 
+        $validated['score'] = 0;
+
+        $level = Level::where('name', 'Beginner')->first();
+        if ($level) {
+            $validated['level_id'] = $level->id;
+        }
+
         $user = User::create($validated);
 
         return response()->json([
             'success' => true,
-            'user'    => $user,
+            'user'    => $user->load('level'),
         ]);
     }
 

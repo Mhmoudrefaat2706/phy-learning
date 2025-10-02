@@ -22,7 +22,7 @@ class BlogCategoryController extends Controller
     {
         $data = $request->validated();
         $data['slug'] = Str::slug($data['name']);
-        $data['lang'] = $data['lang'] ?? app()->getLocale();
+        // $data['lang'] = $data['lang'] ?? app()->getLocale();
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('blog_categories', 'public');

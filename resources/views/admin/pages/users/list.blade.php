@@ -27,55 +27,64 @@
                 </div>
             </div>
 
-            {{-- Users Table --}}
-            <div class="card border-0 shadow-sm">
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table-hover mb-0 table align-middle" id="usersTable">
-                            <thead class="table-light">
-                                <tr>
-                                    <th class="text-center" style="width:60px">#</th>
-                                    <th>{{ __('Name') }}</th>
-                                    <th>{{ __('Email') }}</th>
-                                    <th>{{ __('Phone') }}</th>
-                                    <th class="text-center" style="width:180px">{{ __('Actions') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse($users as $index => $user)
-                                    <tr id="userRow{{ $user->id }}">
-                                        <td class="fw-bold text-center">{{ $users->firstItem() + $index }}</td>
-                                        <td class="user-name">{{ $user->name }}</td>
-                                        <td class="user-email">{{ $user->email }}</td>
-                                        <td class="user-phone">{{ $user->phone ?? "-" }}</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-sm btn-outline-secondary edit-user"
-                                                data-id="{{ $user->id }}">
-                                                <i class="bi bi-pencil-fill"></i>
-                                            </button>
-                                            <button class="btn btn-sm btn-outline-danger delete-user"
-                                                data-id="{{ $user->id }}">
-                                                <i class="bi bi-trash-fill"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-muted text-center">{{ __('No users found.') }}</td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+{{-- Users Table --}}
+<div class="card border-0 shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table-hover mb-0 table align-middle" id="usersTable">
+                <thead class="table-light">
+                    <tr>
+                        <th class="text-center" style="width:60px">#</th>
+                        <th>{{ __('Name') }}</th>
+                        <th>{{ __('Email') }}</th>
+                        <th>{{ __('Phone') }}</th>
+                        <th>{{ __('school') }}</th>
+                        <th>{{ __('school_level') }}</th>
+                        <th>{{ __('score') }}</th>
+                        <th>{{ __('level') }}</th>
+                        <th class="text-center" style="width:180px">{{ __('Actions') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($users as $index => $user)
+                        <tr id="userRow{{ $user->id }}">
+                            <td class="fw-bold text-center">{{ $users->firstItem() + $index }}</td>
+                            <td class="user-name">{{ $user->name }}</td>
+                            <td class="user-email">{{ $user->email }}</td>
+                            <td class="user-phone">{{ $user->phone ?? "-" }}</td>
+                            <td class="user-school">{{ $user->school ?? "-" }}</td>
+                            <td class="user-school_level">{{ $user->school_level ?? "-" }}</td>
+                            <td class="user-score">{{ $user->score ?? "-" }}</td>
+                            <td class="user-level">{{ $user->level->name ?? "-" }}</td>
+                            <td class="text-center">
+                                <button class="btn btn-sm btn-outline-secondary edit-user"
+                                    data-id="{{ $user->id }}">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger delete-user"
+                                    data-id="{{ $user->id }}">
+                                    <i class="bi bi-trash-fill"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="9" class="text-muted text-center">{{ __('No users found.') }}</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-                {{-- Pagination --}}
-                @if ($users->hasPages())
-                    <div class="card-footer d-flex justify-content-center">
-                        {{ $users->links("pagination::bootstrap-5") }}
-                    </div>
-                @endif
-            </div>
+    {{-- Pagination --}}
+    @if ($users->hasPages())
+        <div class="card-footer d-flex justify-content-center">
+            {{ $users->links("pagination::bootstrap-5") }}
+        </div>
+    @endif
+</div>
+
 
         </div>
     </div>
@@ -106,6 +115,16 @@
                         <label class="form-label">{{ __('Phone') }}</label>
                         <input type="text" class="form-control" id="createUserPhone">
                         <div class="invalid-feedback" id="createUserPhoneError"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ __('school') }}</label>
+                        <input type="text" class="form-control" id="createUserschool">
+                        <div class="invalid-feedback" id="createUserschoolError"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ __('school_level') }}</label>
+                        <input type="text" class="form-control" id="createUserschool_level">
+                        <div class="invalid-feedback" id="createUserschool_levelError"></div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">{{ __('Password') }}</label>
@@ -150,6 +169,16 @@
                         <input type="text" class="form-control" id="userPhoneInput">
                         <div class="invalid-feedback" id="userPhoneInputError"></div>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ __('school') }}</label>
+                        <input type="text" class="form-control" id="userschoolInput">
+                        <div class="invalid-feedback" id="userschoolInputError"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">{{ __('school_level') }}</label>
+                        <input type="text" class="form-control" id="userschool_levelInput">
+                        <div class="invalid-feedback" id="userschool_levelInputError"></div>
+                    </div>
                     <div class="text-end">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('Cancel') }}</button>
                         <button type="submit" class="btn btn-primary">{{ __('Save Changes') }}</button>
@@ -181,15 +210,20 @@
 </div>
 @endsection
 
-
 @push("scripts")
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const createForm = document.getElementById('createUserForm');
     const editForm   = document.getElementById('editUserForm');
-    const createModal= new bootstrap.Modal(document.getElementById('createUserModal'));
-    const editModal  = new bootstrap.Modal(document.getElementById('editUserModal'));
-    const deleteModal= new bootstrap.Modal(document.getElementById('deleteUserModal'));
+
+    const createModalEl = document.getElementById('createUserModal');
+    const editModalEl   = document.getElementById('editUserModal');
+    const deleteModalEl = document.getElementById('deleteUserModal');
+
+    const createModal = bootstrap.Modal.getOrCreateInstance(createModalEl);
+    const editModal   = bootstrap.Modal.getOrCreateInstance(editModalEl);
+    const deleteModal = bootstrap.Modal.getOrCreateInstance(deleteModalEl);
+
     const toastEl    = document.getElementById('liveToast');
     const toastMsg   = document.getElementById('toastMessage');
     const toast      = new bootstrap.Toast(toastEl);
@@ -199,10 +233,10 @@ document.addEventListener('DOMContentLoaded', function() {
         toast.show();
     }
 
-    // Create
+    // === Create ===
     createForm.addEventListener('submit', function(e){
         e.preventDefault();
-        ['createUserName','createUserEmail','createUserPhone','createUserPassword'].forEach(id=>{
+        ['createUserName','createUserEmail','createUserPhone','createUserschool','createUserschool_level','createUserPassword'].forEach(id=>{
             document.getElementById(id).classList.remove('is-invalid');
             document.getElementById(id+'Error').textContent='';
         });
@@ -210,6 +244,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const name     = document.getElementById('createUserName').value.trim();
         const email    = document.getElementById('createUserEmail').value.trim();
         const phone    = document.getElementById('createUserPhone').value.trim();
+        const school   = document.getElementById('createUserschool').value.trim();
+        const school_level = document.getElementById('createUserschool_level').value.trim();
         const password = document.getElementById('createUserPassword').value.trim();
 
         fetch("{{ route('admin.users.store') }}", {
@@ -219,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Accept':'application/json',
                 'X-CSRF-TOKEN':'{{ csrf_token() }}'
             },
-            body:JSON.stringify({name,email,phone,password})
+            body:JSON.stringify({name,email,phone,school,school_level,password})
         })
         .then(res=>res.json())
         .then(data=>{
@@ -234,6 +270,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     <td class="user-name">${user.name}</td>
                     <td class="user-email">${user.email}</td>
                     <td class="user-phone">${user.phone ?? '-'}</td>
+                    <td class="user-school">${user.school ?? '-'}</td>
+                    <td class="user-school_level">${user.school_level ?? '-'}</td>
+                    <td class="user-score">${user.score ?? '-'}</td>
+                    <td class="user-level">${user.level?.name ?? '-'}</td>
                     <td class="text-center">
                         <button class="btn btn-sm btn-outline-secondary edit-user" data-id="${user.id}">
                             <i class="bi bi-pencil-fill"></i>
@@ -245,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 table.appendChild(row);
                 createModal.hide();
                 createForm.reset();
-                showToast('User created successfully');
+                setTimeout(()=> showToast('User created successfully'), 300);
             }else if(data.errors){
                 Object.keys(data.errors).forEach(key=>{
                     const camel = key.charAt(0).toUpperCase() + key.slice(1);
@@ -260,7 +300,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Edit & Delete openers
+    // === Edit & Delete openers ===
     document.addEventListener('click', function(e){
         if(e.target.closest('.edit-user')){
             const btn  = e.target.closest('.edit-user');
@@ -269,12 +309,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const name = row.querySelector('.user-name').textContent;
             const email= row.querySelector('.user-email').textContent;
             const phone= row.querySelector('.user-phone').textContent;
+            const school = row.querySelector('.user-school')?.textContent ?? '';
+            const school_level = row.querySelector('.user-school_level')?.textContent ?? '';
 
             document.getElementById('modalUserId').value = id;
             document.getElementById('modalUserName').textContent = name;
             document.getElementById('userNameInput').value = name;
             document.getElementById('userEmailInput').value = email;
             document.getElementById('userPhoneInput').value = phone === '-' ? '' : phone;
+            document.getElementById('userschoolInput').value = school === '-' ? '' : school;
+            document.getElementById('userschool_levelInput').value = school_level === '-' ? '' : school_level;
 
             editModal.show();
         }
@@ -291,10 +335,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Update
+    // === Update ===
     editForm.addEventListener('submit', function(e){
         e.preventDefault();
-        ['userNameInput','userEmailInput','userPhoneInput'].forEach(id=>{
+        ['userNameInput','userEmailInput','userPhoneInput','userschoolInput','userschool_levelInput'].forEach(id=>{
             document.getElementById(id).classList.remove('is-invalid');
             document.getElementById(id+'Error').textContent='';
         });
@@ -303,6 +347,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const name  = document.getElementById('userNameInput').value.trim();
         const email = document.getElementById('userEmailInput').value.trim();
         const phone = document.getElementById('userPhoneInput').value.trim();
+        const school = document.getElementById('userschoolInput').value.trim();
+        const school_level = document.getElementById('userschool_levelInput').value.trim();
 
         fetch(`/admin/users/${id}`,{
             method:'PUT',
@@ -311,7 +357,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 'Accept':'application/json',
                 'X-CSRF-TOKEN':'{{ csrf_token() }}'
             },
-            body:JSON.stringify({name,email,phone})
+            body:JSON.stringify({name,email,phone,school,school_level})
         })
         .then(res=>res.json())
         .then(data=>{
@@ -320,11 +366,19 @@ document.addEventListener('DOMContentLoaded', function() {
                 row.querySelector('.user-name').textContent  = data.user.name;
                 row.querySelector('.user-email').textContent = data.user.email;
                 row.querySelector('.user-phone').textContent = data.user.phone ?? '-';
+                row.querySelector('.user-school').textContent = data.user.school ?? '-';
+                row.querySelector('.user-school_level').textContent = data.user.school_level ?? '-';
                 editModal.hide();
-                showToast('User updated successfully');
+                setTimeout(()=> showToast('User updated successfully'), 300);
             }else if(data.errors){
+                const map = {
+                    name:'userNameInput',
+                    email:'userEmailInput',
+                    phone:'userPhoneInput',
+                    school:'userschoolInput',
+                    school_level:'userschool_levelInput'
+                };
                 Object.keys(data.errors).forEach(key=>{
-                    const map = {name:'userNameInput',email:'userEmailInput',phone:'userPhoneInput'};
                     const input = document.getElementById(map[key]);
                     const error = document.getElementById(map[key]+'Error');
                     if(input && error){
@@ -348,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if(data.success){
                 document.getElementById(`userRow${id}`).remove();
                 deleteModal.hide();
-                showToast('User deleted successfully');
+                setTimeout(()=> showToast('User deleted successfully'), 300);
             }
         });
     });
